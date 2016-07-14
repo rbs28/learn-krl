@@ -1,6 +1,6 @@
 // this is a test
 
-ruleset hello_world {
+rulesett hello_world {
   meta {
     name "Hello World"
     description <<
