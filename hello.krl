@@ -132,7 +132,7 @@ A first ruleset for the Quickstart
     }
     {
       send_directive("say") with
-        something = "Hello #{first_name} #{last_name}";
+        something = "Hello #{first} #{last}";
       send_directive("new_user") with
         passed_id = id and
         passed_first = first and
