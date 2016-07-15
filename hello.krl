@@ -9,15 +9,21 @@ A first ruleset for the Quickstart
     author "Randall Sheen (really Phil Windley)"
     logging on
     sharing on
-    provides hello
+    provides hello, goodbye
  
   }
   global {
+    global_int = 0;
+
     hello = function(obj) {
       msg = "Hello " + obj
       msg
     };
- 
+
+    goodbye = function(obj) {
+      msg2 = "Goodbye " + obj
+      msg2
+    };
   }
   rule hello_world {
     select when echo hello
@@ -30,6 +36,19 @@ A first ruleset for the Quickstart
     }
     always {
       log ("LOG says hello " + name);
+    }
+  }
+  rule goodbye_all {
+    select when yell goodbye
+    pre {
+      name = event:attr("name").klog("passed in number: ");
+    }
+    {
+      send_directive("say") with
+        something = "Goodbye #{name}";
+    }
+    always {
+      log ("LOG goodbye " + name);
     }
   }
  
