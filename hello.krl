@@ -13,8 +13,6 @@ A first ruleset for the Quickstart
  
   }
   global {
-    global_int = 0;
-
     hello = function(obj) {
       msg = "Hello " + obj
       msg
@@ -24,20 +22,32 @@ A first ruleset for the Quickstart
       msg2 = "Goodbye " + obj
       msg2
     };
+
+    users = function() {
+      users = ent:name;
+      users
+    };
+
+    name = function(id) {
+      all_users = users();
+      first = all_users{[id, "name", "first"]}.defaultsTo("0000", "could not find user.");
+      last = all_users{[id, "name", "last"]}.defaultsTo("---", "could not find user.");
+      name = first +  " " + last;
+      name;
+    }
   }
   rule hello_world {
     select when echo hello
     pre {
-      id = event:attr("id").defaultsTo("_0", "no id passed.");
-      first = ent:name{[id, "name", "first"]};
-      last = ent:name{[id, "name", "last"]};
+      id = event:attr("id");
+      default_name = name(id);
     }
     {
       send_directive("say") with
-        greeting = "Hello #{first} #{last}";
+        greeting = "Hello #{default_name}";
     }
     always {
-      log ("LOG says hello " + first + " " + last);
+      log ("LOG says hello " + default_name);
     }
   }
   rule goodbye_all {
