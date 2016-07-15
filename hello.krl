@@ -58,7 +58,7 @@ A first ruleset for the Quickstart
       matching_user = user_by_name(name).klog("user_result: ");
       user_id = matching_user.keys().head().klog("id: ");
       new_user = {
-        "id" : last_name.lc() + "_" + first_name.lc(),
+        "id" : last_name + "_" + first_name,
         "first" : first_name,
         "last" : last_name
       };
