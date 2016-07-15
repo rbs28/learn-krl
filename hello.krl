@@ -53,25 +53,25 @@ A first ruleset for the Quickstart
     pre {
       name = event:attr("name").defaultsTo("0000 ----", "no name passed.");
       full_name = name.split(re/\s/);
-      first_name = full_name[0].klog("first : ");
-      last_name = full_name[1].klog("last : ");
-      matching_user = user_by_name(name).klog("user_result: ");
-      user_id = matching_user.keys().head().klog("id: ");
+      first_name = full_name[0].klog("pre hello first : ");
+      last_name = full_name[1].klog("pre hello last : ");
+      matching_user = user_by_name(name).klog("pre hello user_result: ");
+      user_id = matching_user.keys().head().klog("pre hello id: ");
       new_user = {
-        "id" : last_name + "_" + first_name,
+        "id" : last_name.lc() + "_" + first_name.lc(),
         "first" : first_name,
         "last" : last_name
       };
     }
     if(not user_id.isnull()) then {
       send_directive("say") with
-        greeting = "Hello #{name}";
+        somthing = "Hello #{name}";
     }
     fired {
       log ("LOG says hello to " + name);
       set ent:name{[user_id, "visits"]} ent:name{[user_id, "visits"]} + 1;
     } else {
-      raise explicit event 'new user'
+      raise explicit event 'new_user'
         attributes new_user;
       log("LOG asking to created " + name);
     }
