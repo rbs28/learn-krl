@@ -28,14 +28,16 @@ A first ruleset for the Quickstart
   rule hello_world {
     select when echo hello
     pre {
-      name = event:attr("name").defaultsTo(ent:name, "use stored name");
+      id = event:attr("id").defaultsTo("_0", "no id passed.");
+      first = ent:name{[id, "name", "first"]};
+      last = ent:name{[id, "name", "last"]};
     }
     {
       send_directive("say") with
-        something = "Hello #{name}";
+        greeting = "Hello #{first} #{last}";
     }
     always {
-      log ("LOG says hello " + name);
+      log ("LOG says hello " + first + " " + last);
     }
   }
   rule goodbye_all {
@@ -54,14 +56,25 @@ A first ruleset for the Quickstart
   rule store_name {
     select when hello name
     pre {
-      passed_name = event:attr("name").klog("our passed in Name (store_name): ");
+      id = event:attr("id").klog("our pass in id: ");
+      first = event:attr("first").klog("our passed in first: ");
+      last = event:attr("last").klog("our passed in last: ");
+      init = {"_0": {
+                "name": {
+                  "first":"ASDFHJKL",
+                  "last":""}}
+             }
     }
     {
       send_directive("store_name") with
-        name = passed_name;
+        passed_id = id and
+        passed_first = first and
+        passed_last = last;
     }
     always {
-      set ent:name passed_name;
+      set ent:name init if not ent:name{["_0"]};
+      set ent:name{[id, "name", "first"]} first;
+      set ent:name{[id, "name", "last"]} last;
     }
   }
 }
