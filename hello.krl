@@ -39,7 +39,7 @@ A first ruleset for the Quickstart
     user_by_name = function(full_name) {
       all_users = users();
       filtered_users = all_users.filter(function(user_id, val) {
-        constructed_name = vale{["name", "first"]} + " " + vals{["name", "last"]};
+        constructed_name = val{["name", "first"]} + " " + val{["name", "last"]};
         (constructed_name eq full_name);
       });
       user = filtered_users.head().klog("matching user: ");
@@ -89,6 +89,7 @@ A first ruleset for the Quickstart
       log ("LOG goodbye " + name);
     }
   }
+
   rule store_name {
     select when hello name
     pre {
@@ -113,6 +114,7 @@ A first ruleset for the Quickstart
       set ent:name{[id, "name", "last"]} last;
     }
   }
+
   rule new_user {
     select when explicit new_user
     pre {
