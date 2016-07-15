@@ -9,7 +9,8 @@ A first ruleset for the Quickstart
     author "Randall Sheen (really Phil Windley)"
     logging on
     sharing on
-    provides hello, goodbye, users
+    provides hello
+    provides users
  
   }
   global {
