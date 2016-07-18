@@ -43,7 +43,7 @@ A first ruleset for the Quickstart
         constructed_name = val{["name", "first"]} + " " + val{["name", "last"]};
         (constructed_name eq full_name);
       });
-      user = filtered_users.head().klog("matching user: ");
+      user = filtered_users.head().klog("user_by_name function matching user: ");
       user
     };
   }
@@ -53,10 +53,10 @@ A first ruleset for the Quickstart
     pre {
       name = event:attr("name").defaultsTo("0000 ----", "no name passed.");
       full_name = name.split(re/\s/);
-      first_name = full_name[0].klog("pre hello first : ");
-      last_name = full_name[1].klog("pre hello last : ");
-      matching_user = user_by_name(name).klog("pre hello user_result: ");
-      user_id = matching_user.keys().head().klog("pre hello id: ");
+      first_name = full_name[0].klog("hello_world pre hello first : ");
+      last_name = full_name[1].klog("hello_world pre hello last : ");
+      matching_user = user_by_name(name).klog("hello_world pre hello user_result: ");
+      user_id = matching_user.keys().head().klog("hello_world pre hello id: ");
       new_user = {
         "id" : last_name.lc() + "_" + first_name.lc(),
         "first" : first_name,
@@ -94,9 +94,9 @@ A first ruleset for the Quickstart
   rule store_name {
     select when hello name
     pre {
-      id = event:attr("id").klog("our pass in id: ");
-      first = event:attr("first").klog("our passed in first: ");
-      last = event:attr("last").klog("our passed in last: ");
+      id = event:attr("id").klog("store_name our pass in id: ");
+      first = event:attr("first").klog("store_name our passed in first: ");
+      last = event:attr("last").klog("store_name our passed in last: ");
       init = {"_0": {
                 "name": {
                   "first":"ASDFHJKL",
@@ -119,9 +119,9 @@ A first ruleset for the Quickstart
   rule new_user {
     select when explicit new_user
     pre {
-      id = event:attr("id").klog("our pass in Id: ");
-      first = event:attr("first").klog("our passed in first: ");
-      last = event:attr("last").klog("our passed in last: ");
+      id = event:attr("id").klog("new user our pass in Id: ");
+      first = event:attr("first").klog("new user our passed in first: ");
+      last = event:attr("last").klog("new user our passed in last: ");
       new_user = {
         "name": {
           "first": first,
