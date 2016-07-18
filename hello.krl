@@ -40,7 +40,7 @@ A first ruleset for the Quickstart
     user_by_name = function(full_name) {
       all_users = users();
       filtered_users = all_users.filter(function(user_id, val) {
-        constructed_name = val{["name", "first"]} + " " + val{["name", "last"]};
+        constructed_name = val{["name", "first"]} + " " + val{["name", "last"]}.klog("user_by_name function constructed_name: ");
         (constructed_name eq full_name);
       });
       user = filtered_users.head().klog("user_by_name function matching user: ");
